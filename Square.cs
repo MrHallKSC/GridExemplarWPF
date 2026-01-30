@@ -1,60 +1,89 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GridExemplarWPF
 {
-    // Represents a single square in the grid
+    /// <summary>
+    /// Represents a single square (cell) in the grid, including its location, size, selection state, and walls.
+    /// </summary>
     public class Square
     {
-        // Properties to store the square's position and state
-        public int X { get; set; }          // X coordinate (grid position in pixels)
-        public int Y { get; set; }          // Y coordinate (grid position in pixels)
-        public int Size { get; set; }       // Size of the square in pixels
-        public bool IsSelected { get; set; } // Whether the square is currently selected
+        /// <summary>
+        /// Gets or sets the X coordinate (pixel position) of the square's top-left corner.
+        /// </summary>
+        public int X { get; set; }
 
-        // Wall properties - each square can have up to 4 walls
-        // Using NESW (North/East/South/West) is standard for maze algorithms
-        // true = wall exists, false = wall is open/removed
-        public bool NorthWall { get; set; }  // Top wall
-        public bool EastWall { get; set; }   // Right wall
-        public bool SouthWall { get; set; }  // Bottom wall
-        public bool WestWall { get; set; }   // Left wall
+        /// <summary>
+        /// Gets or sets the Y coordinate (pixel position) of the square's top-left corner.
+        /// </summary>
+        public int Y { get; set; }
 
-        // Constructor to initialise a new square
-        // By default, we create all four walls (a closed cell)
+        /// <summary>
+        /// Gets or sets the size of the square, in pixels.
+        /// </summary>
+        public int Size { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether this square is currently selected.
+        /// </summary>
+        public bool IsSelected { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether the north (top) wall exists.
+        /// </summary>
+        public bool NorthWall { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether the east (right) wall exists.
+        /// </summary>
+        public bool EastWall { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether the south (bottom) wall exists.
+        /// </summary>
+        public bool SouthWall { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether the west (left) wall exists.
+        /// </summary>
+        public bool WestWall { get; set; }
+
+        /// <summary>
+        /// Initializes a new square at a given pixel coordinate with the provided size.
+        /// All walls default to present.
+        /// </summary>
+        /// <param name="x">X coordinate (pixel position).</param>
+        /// <param name="y">Y coordinate (pixel position).</param>
+        /// <param name="size">Square size (pixels).</param>
         public Square(int x, int y, int size)
         {
             X = x;
             Y = y;
             Size = size;
-            IsSelected = false;  // Squares start unselected
+            IsSelected = false;
 
-            // Initialize all walls to true (all walls present)
-            // In a maze generation algorithm, students would remove walls to create paths
             NorthWall = true;
             EastWall = true;
             SouthWall = true;
             WestWall = true;
         }
 
-        // Check if a point (mouse click) is inside this square
-        // This uses boundary checking - the point must be within the square's bounds
+        /// <summary>
+        /// Returns true if the given point lies within this square's bounds.
+        /// </summary>
+        /// <param name="pointX">X coordinate of the point (relative to the canvas).</param>
+        /// <param name="pointY">Y coordinate of the point (relative to the canvas).</param>
         public bool ContainsPoint(double pointX, double pointY)
         {
             return pointX >= X && pointX < X + Size &&
                    pointY >= Y && pointY < Y + Size;
         }
 
-        // Randomly set which walls this square should have
-        // This demonstrates using Random to make decisions
-        // In a real maze, walls would be removed systematically using algorithms
+        /// <summary>
+        /// Randomly sets each of the four walls to exist or not exist.
+        /// </summary>
+        /// <param name="random">Random number generator (should be reused, not recreated each call).</param>
         public void RandomiseWalls(Random random)
         {
-            // Each wall has a 50% chance of existing
-            // random.Next(2) returns 0 or 1, which we compare to get true/false
             NorthWall = random.Next(2) == 1;
             EastWall = random.Next(2) == 1;
             SouthWall = random.Next(2) == 1;
