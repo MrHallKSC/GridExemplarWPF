@@ -177,7 +177,7 @@ namespace GridExemplarWPF
                     // Calculate position (could be used for pixel coordinates later)
                     int x = col * SQUARE_SIZE;
                     int y = row * SQUARE_SIZE;
-                    
+
                     // Create the square and give it random walls
                     grid[row, col] = new Square(x, y, SQUARE_SIZE);
                     grid[row, col].RandomiseWalls(random);
@@ -191,7 +191,7 @@ namespace GridExemplarWPF
             // STEP 5: Create a renderer and display the grid
             GridRendererConsole renderer = new GridRendererConsole();
             renderer.DrawGrid(grid, showGridLines: true);
-            
+
             // That's it! The renderer reads the grid data and outputs it to console.
             // If you later move to WPF, this grid data structure works exactly the same.
         }

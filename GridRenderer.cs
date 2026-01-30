@@ -115,7 +115,7 @@ namespace GridExemplarWPF
             // Draw each wall if it exists - SAME LOGIC AS CONSOLE!
             // CONSOLE: if (square.NorthWall) Console.Write("───");
             // WPF: if (square.NorthWall) create and add a Line shape
-            
+
             if (square.NorthWall)
             {
                 // Create a horizontal line across the top of the square
